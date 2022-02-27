@@ -1517,3 +1517,50 @@ console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message f
 JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
 console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://sharavoz.ru"
 JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+1645960721204	geckodriver	INFO	Listening on 127.0.0.1:49933
+1645960724267	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "49934" "-no-remote" "-profile" "C:\\Users\\Uber\\AppData\\Local\\Temp\\rust_mozprofilewwZSFN"
+1645960724772	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Uber\\AppData\\Local\\Temp\\rust_mozprofilewwZSFN\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:49934/devtools/browser/77f88072-2833-4701-b112-ebb7d31510fb
+1645960726724	Marionette	INFO	Listening on port 49939
+1645960726974	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1645960729324	Marionette	INFO	Stopped listening on port 49939
+JavaScript error: resource://gre/modules/Sqlite.jsm, line 761: Error: Connection closed before committing the transaction.
+
+###!!! [Parent][PContentParent] Error: Send(msgname=PContent::Reply_DiscardBrowsingContext) Closed channel: cannot send/recv
+
+
+###!!! [Parent][PContentParent] Error: Send(msgname=PContent::Reply_DiscardBrowsingContext) Closed channel: cannot send/recv
+
+
+###!!! [Child][PContentChild] Error: RunMessage(msgname=PContent::Msg_DiscardBrowsingContext) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][PContentChild] Error: RunMessage(msgname=PContent::Msg_DiscardBrowsingContext) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][PContentChild] Error: RunMessage(msgname=PContent::Reply_DiscardBrowsingContext) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][PContentParent] Error: Send(msgname=PContent::Msg_DestroyBrowsingContextGroup) Closed channel: cannot send/recv
+
+1645960998880	geckodriver	INFO	Listening on 127.0.0.1:50214
+1645961001949	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "50215" "-no-remote" "-profile" "C:\\Users\\Uber\\AppData\\Local\\Temp\\rust_mozprofileGroml6"
+1645961002435	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Uber\\AppData\\Local\\Temp\\rust_mozprofileGroml6\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:50215/devtools/browser/bdf308fa-3df8-44d4-94a6-88039352d382
+1645961004549	Marionette	INFO	Listening on port 50222
+1645961004663	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1645961009020	Marionette	INFO	Stopped listening on port 50222
+1645961081945	geckodriver	INFO	Listening on 127.0.0.1:50304
+1645961085009	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "50305" "-no-remote" "-profile" "C:\\Users\\Uber\\AppData\\Local\\Temp\\rust_mozprofilejaSzLZ"
+1645961085491	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Uber\\AppData\\Local\\Temp\\rust_mozprofilejaSzLZ\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:50305/devtools/browser/6b9d07eb-fb56-446d-b4c0-51c9662fa3cb
+1645961087480	Marionette	INFO	Listening on port 50310
+1645961087695	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1645961092093	Marionette	INFO	Stopped listening on port 50310
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 718: Error: Phase "Sqlite.jsm: wait until all connections are closed" is finished, it is too late to register completion condition "protections.sqlite#0: waiting for shutdown"
+
+###!!! [Parent][PGPUParent] Error: RunMessage(msgname=PGPU::Msg_ShutdownVR) Channel closing: too late to send/recv, messages will be lost
+
