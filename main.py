@@ -1,7 +1,7 @@
 
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
-import lxml
+# import lxml
 import time
 import csv
 
@@ -9,6 +9,8 @@ import csv
 # Selenium login
 def shara_parse():
     url = "https://sharavoz.ru"
+    username = input("Username:  ")
+    password = input("Password:  ")
 
     options = webdriver.FirefoxOptions()
     options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0")
@@ -22,11 +24,11 @@ def shara_parse():
         enter_button = driver.find_element_by_css_selector("button.nav__button:nth-child(2)").click()
         login = driver.find_element_by_id('log-username')
         login.clear()
-        login.send_keys('uberalles')
+        login.send_keys(username)
         # time.sleep(2)
 
         password = driver.find_element_by_id('log-password')
-        password.send_keys("remedyshara1")
+        password.send_keys(password)
         # time.sleep(1)
         confirm = driver.find_element_by_xpath("/html/body/div[3]/div/form/button").click()
         time.sleep(2)
