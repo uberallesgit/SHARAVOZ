@@ -1,16 +1,20 @@
-
+from datetime import date
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
 # import lxml
 import time
 import csv
 
+today = date.today()
+now_is = today.strftime("%A_%d_%B_%Y")
+print(now_is)
 
 # Selenium login
 def shara_parse():
     url = "https://sharavoz.ru"
     user_name = input("Username:  ")
     pass_word = input("Password:  ")
+    print("Твои данные приняты, ожидай завершения работы программы...")
 
     options = webdriver.FirefoxOptions()
     options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0")
@@ -62,7 +66,7 @@ def shara_parse():
 
 
 
-        with open("data.csv", "w", encoding="utf-8") as file:
+        with open(f"{now_is}.csv", "w", encoding="utf-8") as file:
             writer = csv.writer(file)
             writer.writerow(
 
@@ -92,7 +96,7 @@ def shara_parse():
             ]
 
 
-            with open("data.csv", "a", encoding="utf-8") as file:
+            with open(f"{now_is}.csv", "a", encoding="utf-8") as file:
                 writer = csv.writer(file)
                 writer.writerow(user_data)
 
