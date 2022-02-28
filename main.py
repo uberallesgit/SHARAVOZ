@@ -35,12 +35,12 @@ def shara_parse():
         password.send_keys(pass_word)
         time.sleep(1)
         confirm = driver.find_element_by_xpath("/html/body/div[3]/div/form/button").click()
-        time.sleep(2)
+        time.sleep(3)
 
         dealer_menu = driver.find_element_by_css_selector("li.treeview:nth-child(6) > a:nth-child(1)")
-        time.sleep(2)
+        time.sleep(3)
         dealer_menu.click()
-        time.sleep(1)
+        time.sleep(3)
 
         hundred_clients = driver.find_element_by_css_selector("#users-table_length > label:nth-child(1) > select:nth-child(1) > option:nth-child(4)")
         hundred_clients.click()
