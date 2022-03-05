@@ -13,9 +13,9 @@ print(now_is)
 def shara_parse():
     url = "https://sharavoz.ru"
     # user_name = input("Username:  ")
-    user_name = "uberalles"
-    # pass_word = input("Password:  ")
-    pass_word = "remedyshara1"
+    user_name = input("Логин для входа на сайт: ", "admin")
+    pass_word = input("Password:  ")
+
 
     options = webdriver.FirefoxOptions()
     options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0")
