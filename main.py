@@ -13,7 +13,7 @@ print(now_is)
 def shara_parse():
     url = "https://sharavoz.ru"
     # user_name = input("Username:  ")
-    user_name = input("Логин для входа на сайт: ", "admin")
+    user_name = input("Логин для входа на сайт: ")
     pass_word = input("Password:  ")
 
 
@@ -80,7 +80,6 @@ def shara_parse():
 
         client_count = 1
         for cc in client_cards[1:]:
-
             # print(client_count,cc)
             client_name = cc.find("a", title="Просмотреть логи").text
             days_left = cc.find("span", class_="packet-count-left days-left") or cc.find("span", class_= "packet-count-left days-left three-or-less") or cc.find("span", class_="packet-count-left hours-left")
@@ -91,10 +90,11 @@ def shara_parse():
             if days_left is not None:
                 days_left = days_left.text.strip("(").strip(")")
                 soon_end = int(days_left.split()[0])
-                print(soon_end)
+                # print(soon_end)
                 if soon_end <= 5 or "час" in days_left:
-                    soon_end_marker = "Внимание!!"
-                    print(soon_end_marker)
+                    soon_end_marker = "Внимание ! ! !"
+                else:
+                    soon_end_marker = "Норма"
 
 
 
