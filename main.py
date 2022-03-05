@@ -8,13 +8,14 @@ import csv
 today = date.today()
 now_is = today.strftime("%A_%d_%B_%Y")
 print(now_is)
-
-# Selenium login
+#
+# # Selenium login
 def shara_parse():
     url = "https://sharavoz.ru"
-    user_name = input("Username:  ")
-    pass_word = input("Password:  ")
-    print("Твои данные приняты, ожидай завершения работы программы...")
+    # user_name = input("Username:  ")
+    user_name = "uberalles"
+    # pass_word = input("Password:  ")
+    pass_word = "remedyshara1"
 
     options = webdriver.FirefoxOptions()
     options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0")
@@ -54,6 +55,8 @@ def shara_parse():
             file.write(index_page)
 
 
+#РАБОТА БЕЗ ЗАПРОСОВ 2 tabs
+
 
         with open("index.html", "r", encoding="utf-8") as file:
             src = file.read()
@@ -70,7 +73,7 @@ def shara_parse():
             writer = csv.writer(file)
             writer.writerow(
 
-                ["Номер","Имя клиента","Остаток  дней", "Баланс","Пакет"]
+                ["Номер","Имя клиента","Остаток  дней", "Баланс","Пакет","Скоро закончится"]
 
                           )
 
@@ -82,25 +85,36 @@ def shara_parse():
             client_name = cc.find("a", title="Просмотреть логи").text
             days_left = cc.find("span", class_="packet-count-left days-left") or cc.find("span", class_= "packet-count-left days-left three-or-less")
             ballance = cc.find("div", class_="info-tool pull-left").text
+
             packet_name = cc.find("span",class_="packet-name").text
+            soon_end_marker = None
 
             if days_left is not None:
                 days_left = days_left.text.strip("(").strip(")")
+                soon_end = int(days_left.split()[0])
+                print(soon_end)
+                if soon_end < 5:
+                    soon_end_marker = "Внимание!!"
+                    print("скоро",soon_end_marker)
+                else:
+                    soon_end_marker = ""
+                    print("скоро",soon_end_marker)
 
-            else:
-                days_left = "[INFO] Подписка не активна!"
+
+        else:
+            days_left = "[INFO] Подписка не активна!"
 
 
-            user_data = [
-                client_count,client_name,days_left, ballance,packet_name
-            ]
+        user_data = [
+            client_count,client_name,days_left, ballance,packet_name,soon_end_marker
+        ]
 
 
-            with open(f"{now_is}.csv", "a", encoding="utf-8") as file:
-                writer = csv.writer(file)
-                writer.writerow(user_data)
+        with open(f"{now_is}.csv", "a", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerow(user_data)
 
-                client_count +=1
+            client_count +=1
 
     except Exception as ex:
         print(ex)
@@ -109,9 +123,9 @@ def shara_parse():
         driver.close()
         driver.quit()
 
-def main():
-    shara_parse()
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     shara_parse()
+#
+# if __name__ == '__main__':
+#     main()
 
