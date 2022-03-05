@@ -41,7 +41,7 @@ def shara_parse():
         dealer_menu = driver.find_element_by_css_selector("li.treeview:nth-child(6) > a:nth-child(1)")
         time.sleep(3)
         dealer_menu.click()
-        time.sleep(3)
+        time.sleep(4)
 
         hundred_clients = driver.find_element_by_css_selector("#users-table_length > label:nth-child(1) > select:nth-child(1) > option:nth-child(4)")
         hundred_clients.click()
@@ -83,36 +83,34 @@ def shara_parse():
 
             # print(client_count,cc)
             client_name = cc.find("a", title="Просмотреть логи").text
-            days_left = cc.find("span", class_="packet-count-left days-left") or cc.find("span", class_= "packet-count-left days-left three-or-less")
+            days_left = cc.find("span", class_="packet-count-left days-left") or cc.find("span", class_= "packet-count-left days-left three-or-less") or cc.find("span", class_="packet-count-left hours-left")
             ballance = cc.find("div", class_="info-tool pull-left").text
-
             packet_name = cc.find("span",class_="packet-name").text
-            soon_end_marker = None
+            soon_end_marker = ""
 
             if days_left is not None:
                 days_left = days_left.text.strip("(").strip(")")
                 soon_end = int(days_left.split()[0])
                 print(soon_end)
-                if soon_end < 5:
+                if soon_end <= 5 or "час" in days_left:
                     soon_end_marker = "Внимание!!"
-                    print("скоро",soon_end_marker)
-                else:
-                    soon_end_marker = ""
-                    print("скоро",soon_end_marker)
+                    print(soon_end_marker)
 
 
-        else:
-            days_left = "[INFO] Подписка не активна!"
 
 
-        user_data = [
-            client_count,client_name,days_left, ballance,packet_name,soon_end_marker
-        ]
+            else:
+                days_left = "[INFO] Подписка не активна!"
 
 
-        with open(f"{now_is}.csv", "a", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerow(user_data)
+            user_data = [
+                client_count,client_name,days_left, ballance,packet_name,soon_end_marker
+            ]
+
+
+            with open(f"{now_is}.csv", "a", encoding="utf-8") as file:
+                writer = csv.writer(file)
+                writer.writerow(user_data)
 
             client_count +=1
 
@@ -123,9 +121,12 @@ def shara_parse():
         driver.close()
         driver.quit()
 
-# def main():
-#     shara_parse()
-#
-# if __name__ == '__main__':
-#     main()
+
+
+
+def main():
+    shara_parse()
+
+if __name__ == '__main__':
+    main()
 
