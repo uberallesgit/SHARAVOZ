@@ -6,15 +6,16 @@ import time
 import csv
 
 today = date.today()
-now_is = today.strftime("%A_%d_%B_%Y")
+now_is = today.strftime("%d_%B_%Y")
 print(now_is)
+user_name = input("Логин для входа на сайт: ")
+pass_word = input("Password:  ")
 #
 # # Selenium login
-def shara_parse():
+def shara_record_file():
     url = "https://sharavoz.ru"
     # user_name = input("Username:  ")
-    user_name = input("Логин для входа на сайт: ")
-    pass_word = input("Password:  ")
+
 
 
     options = webdriver.FirefoxOptions()
@@ -47,73 +48,9 @@ def shara_parse():
         hundred_clients.click()
         time.sleep(3)
 
+
         index_page = driver.page_source
         time.sleep(3)
-
-
-        with open("index.html", "w", encoding="utf-8") as file:
-            file.write(index_page)
-
-
-#РАБОТА БЕЗ ЗАПРОСОВ 2 tabs
-
-
-        with open("index.html", "r", encoding="utf-8") as file:
-            src = file.read()
-        # try:
-        soup = bs(src,"lxml")
-
-        client_cards_even = soup.find_all("tr", class_="even")
-        client_cards_odd = soup.find_all("tr", class_="odd")
-        client_cards = client_cards_odd + client_cards_even
-
-
-
-        with open(f"{now_is}.csv", "w", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerow(
-
-                ["Номер","Имя клиента","Остаток  дней", "Баланс","Пакет","Скоро закончится"]
-
-                          )
-
-
-        client_count = 1
-        for cc in client_cards[1:]:
-            # print(client_count,cc)
-            client_name = cc.find("a", title="Просмотреть логи").text
-            days_left = cc.find("span", class_="packet-count-left days-left") or cc.find("span", class_= "packet-count-left days-left three-or-less") or cc.find("span", class_="packet-count-left hours-left")
-            ballance = cc.find("div", class_="info-tool pull-left").text
-            packet_name = cc.find("span",class_="packet-name").text
-            soon_end_marker = ""
-
-            if days_left is not None:
-                days_left = days_left.text.strip("(").strip(")")
-                soon_end = int(days_left.split()[0])
-                # print(soon_end)
-                if soon_end <= 5 or "час" in days_left:
-                    soon_end_marker = "Внимание ! ! !"
-                else:
-                    soon_end_marker = "Норма"
-
-
-
-
-            else:
-                days_left = "[INFO] Подписка не активна!"
-
-
-            user_data = [
-                client_count,client_name,days_left, ballance,packet_name,soon_end_marker
-            ]
-
-
-            with open(f"{now_is}.csv", "a", encoding="utf-8") as file:
-                writer = csv.writer(file)
-                writer.writerow(user_data)
-
-            client_count +=1
-
     except Exception as ex:
         print(ex)
 
@@ -122,10 +59,82 @@ def shara_parse():
         driver.quit()
 
 
+    with open("index.html", "w", encoding="utf-8") as file:
+        file.write(index_page)
+
+
+#РАБОТА БЕЗ ЗАПРОСОВ 2 tabs
+
+def open_recorded_file():
+    with open("index.html", "r", encoding="utf-8") as file:
+        src = file.read()
+
+    soup = bs(src,"lxml")
+
+    client_cards_even = soup.find_all("tr", class_="even")
+    client_cards_odd = soup.find_all("tr", class_="odd")
+    client_cards = client_cards_odd + client_cards_even
+
+
+
+    with open(f"{user_name}_{now_is}.csv", "w", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(
+
+            ["Номер","Имя клиента","Остаток  дней", "Баланс","Пакет","Скоро закончится"]
+
+                      )
+
+
+    client_count = 1
+    for cc in client_cards[1:]:
+        # print(client_count,cc)
+        client_name = cc.find("a", title="Просмотреть логи").text
+        days_left = cc.find("span", class_="packet-count-left days-left") or cc.find("span", class_= "packet-count-left days-left three-or-less") or cc.find("span", class_="packet-count-left hours-left")
+        ballance = cc.find("div", class_="info-tool pull-left").text
+        packet_name = cc.find("span",class_="packet-name").text
+        soon_end_marker = ""
+
+
+        if days_left is not None:
+
+
+            days_left = days_left.text.strip("(").strip(")")
+            soon_end = int(days_left.split()[0])
+
+            if soon_end <= 5 or "час" in days_left:
+                soon_end_marker = "Внимание ! ! !"
+            else:
+                soon_end_marker = "Норма"
+
+
+
+
+
+        else:
+            days_left = "[INFO] Подписка не активна!"
+            soon_end_marker = "Кандидат на удаление"
+
+
+        user_data = [
+            client_count,client_name,days_left, ballance,packet_name,soon_end_marker
+        ]
+
+
+        with open(f"{user_name}_{now_is}.csv", "a", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerow(user_data)
+
+        client_count +=1
+
+
+
+
 
 
 def main():
-    shara_parse()
+    shara_record_file()
+    open_recorded_file()
 
 if __name__ == '__main__':
     main()
