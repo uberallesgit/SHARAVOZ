@@ -5,18 +5,17 @@ from selenium import webdriver
 import time
 import csv
 
+url = "https://sharavoz.ru"
 today = date.today()
-now_is = today.strftime("%d_%B_%Y")
+now_is = today.strftime("%d%B%Y")
 print(now_is)
 user_name = input("Логин для входа на сайт: ")
 pass_word = input("Password:  ")
 #
 # # Selenium login
 def shara_record_file():
-    url = "https://sharavoz.ru"
-    # user_name = input("Username:  ")
-
-
+    """records the html page into  a file for further parsing without bombing a server with multiple requests"""
+    # url = "https://sharavoz.ru"
 
     options = webdriver.FirefoxOptions()
     options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0")
@@ -37,10 +36,10 @@ def shara_record_file():
         password.send_keys(pass_word)
         time.sleep(1)
         confirm = driver.find_element_by_xpath("/html/body/div[3]/div/form/button").click()
-        time.sleep(3)
+        time.sleep(4)
 
         dealer_menu = driver.find_element_by_css_selector("li.treeview:nth-child(6) > a:nth-child(1)")
-        time.sleep(3)
+        time.sleep(4)
         dealer_menu.click()
         time.sleep(4)
 
@@ -51,6 +50,9 @@ def shara_record_file():
 
         index_page = driver.page_source
         time.sleep(3)
+
+        with open("index.html", "w", encoding="utf-8") as file:
+            file.write(index_page)
     except Exception as ex:
         print(ex)
 
@@ -59,13 +61,9 @@ def shara_record_file():
         driver.quit()
 
 
-    with open("index.html", "w", encoding="utf-8") as file:
-        file.write(index_page)
-
-
-#РАБОТА БЕЗ ЗАПРОСОВ 2 tabs
 
 def open_recorded_file():
+    """opens previousley saved html document and creates a soup object of it"""
     with open("index.html", "r", encoding="utf-8") as file:
         src = file.read()
 
