@@ -1,4 +1,5 @@
 from datetime import date
+from datetime import datetime as dt , timedelta
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
 # import lxml
@@ -7,8 +8,11 @@ import csv
 
 url = "https://sharavoz.ru"
 today = date.today()
-now_is = today.strftime("%d%B%Y")
+now_is = today.strftime("%d.%m.%Y")
+year_ago = dt.now()-timedelta(366)
+# year_ago = year_ago.strftime("%d.%m.%Y")
 print(now_is)
+print("year ago is: ",year_ago.strftime("%d.%m.%Y"))
 user_name = input("Логин для входа на сайт: ")
 pass_word = input("Password:  ")
 #
@@ -91,6 +95,14 @@ def open_recorded_file():
         days_left = cc.find("span", class_="packet-count-left days-left") or cc.find("span", class_= "packet-count-left days-left three-or-less") or cc.find("span", class_="packet-count-left hours-left")
         ballance = cc.find("div", class_="info-tool pull-left").text
         packet_name = cc.find("span",class_="packet-name").text
+        last_time_used = cc.find("span", class_="packet-dates").text.split()[-1]
+
+        last_day = int(last_time_used.split(".")[0])
+        last_month =  int(last_time_used.split(".")[1])
+        last_year =  int(last_time_used.split(".")[2])
+        last_time_used = dt(last_year,last_month,last_day)
+        # print("последний раз",last_time_used)
+
         soon_end_marker = ""
 
 
@@ -99,6 +111,7 @@ def open_recorded_file():
 
             days_left = days_left.text.strip("(").strip(")")
             soon_end = int(days_left.split()[0])
+
 
             if soon_end <= 5 or "час" in days_left:
                 soon_end_marker = "Внимание ! ! !"
@@ -110,8 +123,10 @@ def open_recorded_file():
 
 
         else:
-            days_left = "[INFO] Подписка не активна!"
-            soon_end_marker = "Кандидат на удаление"
+            days_left = "[INFO] пакет неактивен"
+            if last_time_used < year_ago:
+                soon_end_marker = "Кандидат на удаление"
+            # soon_end_marker = ""
 
 
         user_data = [
