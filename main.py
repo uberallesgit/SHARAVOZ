@@ -27,17 +27,14 @@ def shara_record_file():
 
     try:
         driver.get(url)
-        # time.sleep(2)
-
         enter_button = driver.find_element_by_css_selector("button.nav__button:nth-child(2)").click()
         login = driver.find_element_by_id('log-username')
         login.clear()
         login.send_keys(user_name)
-        # time.sleep(2)#2
 
         password = driver.find_element_by_id('log-password')
         password.send_keys(pass_word)
-        # time.sleep(2)#4
+
         confirm = driver.find_element_by_xpath("/html/body/div[3]/div/form/button").click()
         time.sleep(3)#4
 
@@ -63,10 +60,8 @@ def shara_record_file():
         driver.close()
         driver.quit()
 
-
-
 def open_recorded_file():
-    """opens previousley saved html document and creates a soup object of it"""
+    """opens previously saved html document and creates a soup object of it"""
     with open("index.html", "r", encoding="utf-8") as file:
         src = file.read()
 
@@ -76,8 +71,6 @@ def open_recorded_file():
     client_cards_odd = soup.find_all("tr", class_="odd")
     client_cards = client_cards_odd + client_cards_even
 
-
-
     with open(f"{user_name}_{now_is}.csv", "w", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(
@@ -85,7 +78,6 @@ def open_recorded_file():
             ["Номер","Имя клиента","Остаток  дней", "Баланс","Пакет","Дата окончания","Статус"]
 
                       )
-
 
     client_count = 1
     for cc in client_cards[1:]:
@@ -103,11 +95,8 @@ def open_recorded_file():
 
 
         if days_left is not None:
-
-
             days_left = days_left.text.strip("(").strip(")")
             soon_end = int(days_left.split()[0])
-
 
             if soon_end <= 5 or "час" in days_left:
                 soon_end_marker = "Внимание ! ! !"
